@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club de Regatas Vasco da Gama</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+            color: #333;
+            border: 4px solid #000;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: spin 6s linear infinite;
+            border: 5px solid #000;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .audio-controls {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .play-button {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: white;
+            border: 2px solid #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .play-button:hover {
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 25px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            border-radius: 3px;
+        }
+
+        .section-title {
+            color: #000;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            border-radius: 1px;
+        }
+
+        .section-text {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #000;
+            font-style: italic;
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 100%);
+            border-radius: 10px;
+            border-left: 5px solid #000;
+            font-size: 18px;
+        }
+
+        .colors-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .color-box {
+            width: 140px;
+            height: 100px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .color-box:hover::before {
+            left: 100%;
+        }
+
+        .color-box:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .white {
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            color: #000;
+            border: 3px solid #000;
+        }
+
+        .black {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .idols-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .idol-card {
+            background: white;
+            border: 2px solid #000;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .idol-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .idol-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .idol-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .curiosities-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .curiosities-list li {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .curiosities-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .curiosities-list li::before {
+            content: "⚽";
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #000;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .section-text {
+                font-size: 14px;
+            }
+
+            .colors-container {
+                justify-content: center;
+            }
+
+            .color-box {
+                width: 120px;
+                height: 80px;
+                font-size: 14px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .colors-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .color-box {
+                width: 200px;
+                height: 70px;
+            }
+
+            .idols-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animações */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+        .section:nth-child(7) { animation-delay: 0.7s; }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #000 0%, #333 50%, #000 100%);
+            margin: 40px -30px -30px -30px;
+            padding: 60px 30px;
+            border-radius: 0 0 15px 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .welcome-hearts {
+            font-size: 32px;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+
+        .welcome-image {
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .welcome-image img {
+            max-width: 500px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 5px solid #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .welcome-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .welcome-subtitle {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.3); }
+            100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.6); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Responsividade para a seção de boas-vindas */
+        @media (max-width: 768px) {
+            .welcome-section {
+                margin: 40px -20px -20px -20px;
+                padding: 40px 20px;
+            }
+
+            .welcome-title {
+                font-size: 32px;
+                letter-spacing: 2px;
+            }
+
+            .welcome-hearts {
+                font-size: 24px;
+            }
+
+            .welcome-image img {
+                max-width: 350px;
+            }
+
+            .welcome-subtitle {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-section {
+                margin: 40px -15px -15px -15px;
+                padding: 30px 15px;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .welcome-hearts {
+                font-size: 20px;
+            }
+
+            .welcome-image img {
+                max-width: 280px;
+            }
+
+            .welcome-subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Club de Regatas Vasco da Gama</h1>
+            <p class="subtitle">Desde 1898 - Gigante da Colina</p>
+            <div class="logo">
+                <img src="CRVascodaGama.png" alt="Brasão do Vasco da Gama">
+            </div>
+        </div>
+
+        <div class="audio-controls">
+            <h3>🎵 Hino do Vasco da Gama</h3>
+            <button class="play-button" onclick="playAnthem()">▶️ Tocar Hino Oficial</button>
+            <audio id="anthem" preload="auto">
+                <source src="vasco-da-gama-estourado.mp3" type="audio/mpeg">
+                <!-- Fallback para quando o áudio não estiver disponível -->
+            </audio>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">História Gloriosa</h2>
+                <p class="section-text">
+                    O Club de Regatas Vasco da Gama foi fundado em 21 de agosto de 1898 por um grupo de remadores. 
+                    É um dos clubes mais tradicionais do Brasil, conhecido por sua luta contra o preconceito racial 
+                    no futebol brasileiro e por revelar grandes talentos como Romário, Bebeto, Juninho Pernambucano 
+                    e muitos outros.
+                </p>
+                <p class="section-text">
+                    O clube tem uma história rica em conquistas nacionais e internacionais, sendo um dos únicos 
+                    clubes brasileiros a conquistar títulos em todos os principais campeonatos sul-americanos.
+                </p>
+                <div class="highlight floating">
+                    "Vasco da Gama é tradição, é paixão, é o Gigante da Colina!"
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Estádio São Januário</h2>
+                <p class="section-text">
+                    O estádio São Januário, localizado no bairro de São Cristóvão, no Rio de Janeiro, é a casa do 
+                    Vasco desde 1927. É considerado um dos estádios mais tradicionais do Brasil, com capacidade 
+                    para cerca de 21.000 torcedores. O estádio é conhecido por sua atmosfera única e pela 
+                    proximidade entre torcida e gramado.
+                </p>
+                <p class="section-text">
+                    São Januário foi palco de momentos históricos do futebol brasileiro, incluindo jogos da 
+                    Seleção Brasileira e finais de campeonatos importantes.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Principais Títulos</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Brasileirões</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Copa Libertadores</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Copa Mercosul</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Campeonatos Cariocas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Copa do Brasil</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Mundial de Clubes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Ídolos Eternos</h2>
+                <div class="idols-container">
+                    <div class="idol-card">
+                        <div class="idol-name">Romário</div>
+                        <div class="idol-description">
+                            Baixinho, maior artilheiro da história do Vasco e um dos maiores jogadores brasileiros de todos os tempos.
+                        </div>
+                    </div>
+                    <div class="idol-card">
+                        <div class="idol-name">Bebeto</div>
+                        <div class="idol-description">
+                            Craque que marcou época no Vasco e na Seleção Brasileira, campeão mundial em 1994.
+                        </div>
+                    </div>
+                    <div class="idol-card">
+                        <div class="idol-name">Juninho Pernambucano</div>
+                        <div class="idol-description">
+                            Mestre das bolas paradas e um dos meio-campistas mais talentosos da história do clube.
+                        </div>
+                    </div>
+                    <div class="idol-card">
+                        <div class="idol-name">Roberto Dinamite</div>
+                        <div class="idol-description">
+                            Ídolo que defendeu o Vasco em duas passagens e é considerado um dos grandes atacantes do futebol brasileiro.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Cores Oficiais</h2>
+                <div class="colors-container">
+                    <div class="color-box white" onclick="showColorInfo('branco')">
+                        Branco
+                    </div>
+                    <div class="color-box black" onclick="showColorInfo('preto')">
+                        Preto
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Curiosidades Vascaínas</h2>
+                <ul class="curiosities-list">
+                    <li>O Vasco foi o primeiro clube brasileiro a contratar jogadores negros oficialmente, em 1923.</li>
+                    <li>O clube possui um dos maiores departamentos de esportes aquáticos do Brasil.</li>
+                    <li>São Januário foi o primeiro estádio do mundo a ter arquibancadas de concreto armado.</li>
+                    <li>O Vasco é o único clube brasileiro a conquistar a Copa Libertadores, Copa Mercosul e Mundial de Clubes.</li>
+                    <li>A cruz de malta é símbolo do clube desde sua fundação, representando os navegadores portugueses.</li>
+                    <li>O clube revelou mais de 50 jogadores para a Seleção Brasileira ao longo de sua história.</li>
+                    <li>Vasco foi o primeiro clube carioca a ter uma escolinha de futebol oficial.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Hino e Tradição</h2>
+                <p class="section-text">
+                    O hino do Vasco da Gama é uma das mais belas canções do futebol brasileiro, composto por 
+                    Joaquim Barros Ferreira da Silva em 1918. A letra exalta a história do clube, seus valores 
+                    e a paixão da torcida vascaína.
+                </p>
+                <p class="section-text">
+                    A tradição vascaína passa de geração em geração, mantendo vivos os valores de luta, 
+                    persistência e amor ao clube que caracterizam o "Gigante da Colina".
+                </p>
+                <div class="highlight">
+                    "Salve o Vasco da Gama, salve o pavilhão sem par!"
+                </div>
+            </div>
+        </div>
+
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1 class="welcome-title">
+                    💖 BEM VINDO AO GIGANTE 💖
+                </h1>
+                <div class="welcome-hearts">
+                    ❤️ 🖤 🤍 ❤️ 🖤 🤍 ❤️
+                </div>
+                <div class="welcome-image">
+                    <img src="ian.png" alt="Bem vindo ao Vasco da Gama">
+                </div>
+                <div class="welcome-hearts">
+                    🤍 🖤 ❤️ 🤍 🖤 ❤️ 🤍
+                </div>
+                <p class="welcome-subtitle">
+                    💖 GIGANTE DA COLINA ETERNO 💖
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Página dedicada ao eterno Gigante da Colina</p>
+            <p>Vasco da Gama - Paixão que não se explica, se sente! 🖤🤍</p>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        let anthem = document.getElementById('anthem');
+
+        // Função para tocar o hino
+        function playAnthem() {
+            const button = document.querySelector('.play-button');
+            
+            if (!isPlaying) {
+                // Tenta tocar o áudio
+                anthem.play().then(() => {
+                    button.innerHTML = '⏸️ Pausar Hino';
+                    isPlaying = true;
+                }).catch(() => {
+                    // Se não conseguir tocar o áudio, mostra uma mensagem
+                    alert('🎵 Hino do Vasco da Gama 🎵\n\n"Salve o Vasco da Gama\nSalve o pavilhão sem par\nTu és o orgulho dos desportos\nTu és o gigante do mar"\n\n(Áudio não disponível no momento)');
+                });
+            } else {
+                anthem.pause();
+                button.innerHTML = '▶️ Tocar Hino Oficial';
+                isPlaying = false;
+            }
+        }
+
+        // Event listener para quando o áudio terminar
+        anthem.addEventListener('ended', () => {
+            document.querySelector('.play-button').innerHTML = '▶️ Tocar Hino Oficial';
+            isPlaying = false;
+        });
+
+        // Função para mostrar informações sobre as cores
+        function showColorInfo(cor) {
+            const info = {
+                'branco': '🤍 O branco representa a pureza dos ideais vascaínos e a tradição do clube!',
+                'preto': '🖤 O preto simboliza a elegância, força e determinação do Gigante da Colina!'
+            };
+            
+            alert(info[cor]);
+        }
+
+        // Animação de entrada suave
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Efeito de hover nas cores e cards
+        document.querySelectorAll('.color-box, .stat-card, .idol-card').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Responsividade dinâmica
+        function checkScreenSize() {
+            const container = document.querySelector('.container');
+            const width = window.innerWidth;
+            
+            if (width < 480) {
+                container.style.margin = '10px';
+            } else {
+                container.style.margin = '0 auto';
+            }
+        }
+
+        window.addEventListener('resize', checkScreenSize);
+        checkScreenSize();
+
+        // Efeito de parallax no header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            const rate = scrolled * -0.5;
+            header.style.transform = `translateY(${rate}px)`;
+        });
+
+        // Contador animado para as estatísticas
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    counter.textContent = Math.floor(current);
+                    
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    }
+                }, 20);
+            });
+        }
+
+        // Executa a animação dos contadores quando a seção estiver visível
+        const statsSection = document.querySelector('.stats-grid');
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
